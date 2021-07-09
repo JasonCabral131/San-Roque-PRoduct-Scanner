@@ -31,7 +31,6 @@ import {
 } from 'react-native-paper';
 import {useFocusEffect} from '@react-navigation/native';
 import randomNumber from 'random-number';
-
 import DirectSms from 'react-native-direct-sms';
 const AddProduct = props => {
   const dispatch = useDispatch();
@@ -171,126 +170,93 @@ const AddProduct = props => {
   return (
     <View style={{height: '100%', margin: 0, padding: 0}}>
       {isSuccess ? (
-        isSendingSms ? (
-          <View style={welcomeStyleScreen.welcomeContainer}>
-            <View style={welcomeStyleScreen.containerInformation}>
-              <View style={welcomeStyleScreen.containerInformationImage}>
-                <Avatar.Image
-                  source={{
-                    uri: isSuccess
-                      ? isSuccess.profile
-                        ? generatePublicUrl(isSuccess.profile, urlConfig)
-                        : 'https://cdn3.vectorstock.com/i/1000x1000/98/22/logo-for-grocery-store-vector-21609822.jpg'
-                      : 'https://cdn3.vectorstock.com/i/1000x1000/98/22/logo-for-grocery-store-vector-21609822.jpg',
-                  }}
-                  size={100}
-                />
+        <View style={styles.container}>
+          <View style={styles.header}>
+            <View style={welcomeStyleScreen.welcomeContainer}>
+              <View style={welcomeStyleScreen.containerInformation}>
+                <View style={welcomeStyleScreen.containerInformationImage}>
+                  <Avatar.Image
+                    source={{
+                      uri: isSuccess
+                        ? isSuccess.profile
+                          ? generatePublicUrl(isSuccess.profile, urlConfig)
+                          : 'https://cdn3.vectorstock.com/i/1000x1000/98/22/logo-for-grocery-store-vector-21609822.jpg'
+                        : 'https://cdn3.vectorstock.com/i/1000x1000/98/22/logo-for-grocery-store-vector-21609822.jpg',
+                    }}
+                    size={100}
+                  />
+                </View>
+                <View style={welcomeStyleScreen.containerInformationCustomer}>
+                  <Headline
+                    style={{
+                      marginTop: 10,
+                      display: 'flex',
+                      justifyContent: 'center',
+                      textAlign: 'center',
+                      alignContent: 'center',
+                      alignItems: 'center',
+                    }}>
+                    Welcome:{' '}
+                  </Headline>
+                  <Title style={{marginTop: 5, marginLeft: 5}}>
+                    {isSuccess ? isSuccess.name : ''}
+                  </Title>
+                  <Paragraph style={{marginTop: 5, marginLeft: 5}}>
+                    {isSuccess ? isSuccess.email : ''}
+                  </Paragraph>
+                </View>
               </View>
-              <View style={welcomeStyleScreen.containerInformationCustomer}>
-                <Headline
-                  style={{
-                    marginTop: 10,
-                    display: 'flex',
-                    justifyContent: 'center',
-                    textAlign: 'center',
-                    alignContent: 'center',
-                    alignItems: 'center',
-                  }}>
-                  Welcome:{' '}
-                </Headline>
+              <View style={welcomeStyleScreen.containerInformationPhoneAddress}>
                 <Title style={{marginTop: 5, marginLeft: 5}}>
-                  {isSuccess ? isSuccess.name : ''}
+                  Phone # : {isSuccess ? isSuccess.phone : ''}
                 </Title>
                 <Paragraph style={{marginTop: 5, marginLeft: 5}}>
-                  {isSuccess ? isSuccess.email : ''}
+                  address : {isSuccess ? showAddress(isSuccess.address) : ''}
                 </Paragraph>
               </View>
             </View>
-            <View style={welcomeStyleScreen.containerInformationPhoneAddress}>
-              <Title style={{marginTop: 5, marginLeft: 5}}>
-                Phone # : {isSuccess ? isSuccess.phone : ''}
-              </Title>
-              <Paragraph style={{marginTop: 5, marginLeft: 5}}>
-                address : {isSuccess ? showAddress(isSuccess.address) : ''}
-              </Paragraph>
-              <Caption>
-                <IconsMaterial name="sms" />
-                SMS VERIFICATION
-              </Caption>
-              <TextInput
-                style={{height: 70, width: '95%', margin: 5}}
-                mode={'flat'}
-                label="SMS VERIFICATION"
-                value={verifySms}
-                onChangeText={text => setVerifySms(text)}
-              />
-
-              <Button mode="contained" onPress={() => VerifyIsValidSms()}>
-                Verify
-              </Button>
-            </View>
           </View>
-        ) : (
-          <View style={welcomeStyleScreen.welcomeContainer}>
-            <View style={welcomeStyleScreen.containerInformation}>
-              <View style={welcomeStyleScreen.containerInformationImage}>
-                <Avatar.Image
-                  source={{
-                    uri: isSuccess
-                      ? isSuccess.profile
-                        ? generatePublicUrl(isSuccess.profile, urlConfig)
-                        : 'https://cdn3.vectorstock.com/i/1000x1000/98/22/logo-for-grocery-store-vector-21609822.jpg'
-                      : 'https://cdn3.vectorstock.com/i/1000x1000/98/22/logo-for-grocery-store-vector-21609822.jpg',
-                  }}
-                  size={100}
+          <View style={styles.footer}>
+            {isSendingSms ? (
+              <View style={{width: '100%'}}>
+                <Caption>
+                  <IconsMaterial name="sms" />
+                  SMS VERIFICATION
+                </Caption>
+                <TextInput
+                  style={{height: 70, width: '95%', margin: 5}}
+                  mode={'flat'}
+                  label="SMS VERIFICATION"
+                  value={verifySms}
+                  onChangeText={text => setVerifySms(text)}
                 />
-              </View>
-              <View style={welcomeStyleScreen.containerInformationCustomer}>
-                <Headline
-                  style={{
-                    marginTop: 10,
-                    display: 'flex',
-                    justifyContent: 'center',
-                    textAlign: 'center',
-                    alignContent: 'center',
-                    alignItems: 'center',
-                  }}>
-                  Welcome:{' '}
-                </Headline>
-                <Title style={{marginTop: 5, marginLeft: 5}}>
-                  {isSuccess ? isSuccess.name : ''}
-                </Title>
-                <Paragraph style={{marginTop: 5, marginLeft: 5}}>
-                  {isSuccess ? isSuccess.email : ''}
-                </Paragraph>
-              </View>
-            </View>
-            <View style={welcomeStyleScreen.containerInformationPhoneAddress}>
-              <Title style={{marginTop: 5, marginLeft: 5}}>
-                Phone # : {isSuccess ? isSuccess.phone : ''}
-              </Title>
-              <Paragraph style={{marginTop: 5, marginLeft: 5}}>
-                Address : {isSuccess ? showAddress(isSuccess.address) : ''}
-              </Paragraph>
-              <Caption>
-                <MaterialIcon name="onepassword" />
-                Account Password
-              </Caption>
-              <TextInput
-                style={{height: 70, width: '95%', margin: 5}}
-                mode={'flat'}
-                secureTextEntry={true}
-                label="Enter Your Password"
-                value={password}
-                onChangeText={text => setPassword(text)}
-              />
 
-              <Button mode="contained" onPress={() => verifyPassword()}>
-                Verify Password
-              </Button>
-            </View>
+                <Button mode="contained" onPress={() => VerifyIsValidSms()}>
+                  Verify
+                </Button>
+              </View>
+            ) : (
+              <View style={{width: '100%'}}>
+                <Caption>
+                  <MaterialIcon name="onepassword" />
+                  Account Password
+                </Caption>
+                <TextInput
+                  style={{height: 70, width: '95%', margin: 5}}
+                  mode={'flat'}
+                  secureTextEntry={true}
+                  label="Enter Your Password"
+                  value={password}
+                  onChangeText={text => setPassword(text)}
+                />
+
+                <Button mode="contained" onPress={() => verifyPassword()}>
+                  Verify Password
+                </Button>
+              </View>
+            )}
           </View>
-        )
+        </View>
       ) : isLoading ? (
         <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
           <ActivityIndicator
@@ -346,13 +312,6 @@ const welcomeStyleScreen = StyleSheet.create({
     display: 'flex',
     flexDirection: 'column',
     backgroundColor: '#f8f8f8',
-    marginBottom: 20,
-    borderRadius: 10,
-    padding: 10,
-    borderRadius: 20,
-    borderWidth: 1,
-    marginTop: 70,
-    marginRight: 5,
   },
   containerInformation: {
     width: 370,
@@ -377,5 +336,27 @@ const welcomeStyleScreen = StyleSheet.create({
     width: '100%',
     display: 'flex',
     flexDirection: 'column',
+  },
+});
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#009387',
+  },
+  header: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '100%',
+  },
+  footer: {
+    display: 'flex',
+    flexDirection: 'column',
+    backgroundColor: '#fff',
+    borderTopLeftRadius: 30,
+    borderTopRightRadius: 30,
+    paddingVertical: 50,
+    paddingHorizontal: 30,
   },
 });
