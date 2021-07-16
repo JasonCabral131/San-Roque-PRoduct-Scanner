@@ -28,6 +28,7 @@ import {
   Button,
   Paragraph,
   Avatar,
+  Card,
 } from 'react-native-paper';
 import {useFocusEffect} from '@react-navigation/native';
 import randomNumber from 'random-number';
@@ -171,61 +172,83 @@ const AddProduct = props => {
     <View style={{height: '100%', margin: 0, padding: 0}}>
       {isSuccess ? (
         <View style={styles.container}>
-          <View style={styles.header}>
-            <View style={welcomeStyleScreen.welcomeContainer}>
-              <View style={welcomeStyleScreen.containerInformation}>
-                <View style={welcomeStyleScreen.containerInformationImage}>
-                  <Avatar.Image
-                    source={{
-                      uri: isSuccess
-                        ? isSuccess.profile
-                          ? generatePublicUrl(isSuccess.profile, urlConfig)
-                          : 'https://cdn3.vectorstock.com/i/1000x1000/98/22/logo-for-grocery-store-vector-21609822.jpg'
-                        : 'https://cdn3.vectorstock.com/i/1000x1000/98/22/logo-for-grocery-store-vector-21609822.jpg',
-                    }}
-                    size={100}
-                  />
-                </View>
-                <View style={welcomeStyleScreen.containerInformationCustomer}>
-                  <Headline
-                    style={{
-                      marginTop: 10,
-                      display: 'flex',
-                      justifyContent: 'center',
-                      textAlign: 'center',
-                      alignContent: 'center',
-                      alignItems: 'center',
-                    }}>
-                    Welcome:{' '}
-                  </Headline>
-                  <Title style={{marginTop: 5, marginLeft: 5}}>
-                    {isSuccess ? isSuccess.name : ''}
-                  </Title>
-                  <Paragraph style={{marginTop: 5, marginLeft: 5}}>
-                    {isSuccess ? isSuccess.email : ''}
-                  </Paragraph>
+          <Card style={{margin: 5}}>
+            <Card.Content>
+              <View style={styles.header}>
+                <View style={welcomeStyleScreen.welcomeContainer}>
+                  <View style={welcomeStyleScreen.containerInformation}>
+                    <View style={welcomeStyleScreen.containerInformationImage}>
+                      <Avatar.Image
+                        source={{
+                          uri: isSuccess
+                            ? isSuccess.profile
+                              ? generatePublicUrl(isSuccess.profile, urlConfig)
+                              : 'https://cdn3.vectorstock.com/i/1000x1000/98/22/logo-for-grocery-store-vector-21609822.jpg'
+                            : 'https://cdn3.vectorstock.com/i/1000x1000/98/22/logo-for-grocery-store-vector-21609822.jpg',
+                        }}
+                        size={100}
+                      />
+                    </View>
+                    <View
+                      style={welcomeStyleScreen.containerInformationCustomer}>
+                      <Headline
+                        style={{
+                          marginTop: 10,
+                          display: 'flex',
+                          justifyContent: 'center',
+                          textAlign: 'center',
+                          alignContent: 'center',
+                          alignItems: 'center',
+                        }}>
+                        Welcome{' '}
+                      </Headline>
+                      <Title style={{marginTop: 5, marginLeft: 5}}>
+                        {isSuccess ? isSuccess.name : ''}
+                      </Title>
+                      <Paragraph style={{marginTop: 5, marginLeft: 5}}>
+                        {isSuccess ? isSuccess.email : ''}
+                      </Paragraph>
+                    </View>
+                  </View>
+                  <View
+                    style={welcomeStyleScreen.containerInformationPhoneAddress}>
+                    <Title style={{marginTop: 5, marginLeft: 5}}>
+                      Phone # : {isSuccess ? isSuccess.phone : ''}
+                    </Title>
+                    <Paragraph style={{marginTop: 5, marginLeft: 5}}>
+                      address :{' '}
+                      {isSuccess ? showAddress(isSuccess.address) : ''}
+                    </Paragraph>
+                  </View>
                 </View>
               </View>
-              <View style={welcomeStyleScreen.containerInformationPhoneAddress}>
-                <Title style={{marginTop: 5, marginLeft: 5}}>
-                  Phone # : {isSuccess ? isSuccess.phone : ''}
-                </Title>
-                <Paragraph style={{marginTop: 5, marginLeft: 5}}>
-                  address : {isSuccess ? showAddress(isSuccess.address) : ''}
-                </Paragraph>
-              </View>
-            </View>
-          </View>
+            </Card.Content>
+          </Card>
           <View style={styles.footer}>
             {isSendingSms ? (
               <View style={{width: '100%'}}>
+                <Title
+                  style={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignContent: 'center',
+                    alignItems: 'center',
+                    textAlign: 'center',
+                  }}>
+                  SMS VERIFICATION
+                </Title>
                 <Caption>
                   <IconsMaterial name="sms" />
                   SMS VERIFICATION
                 </Caption>
                 <TextInput
-                  style={{height: 70, width: '95%', margin: 5}}
-                  mode={'flat'}
+                  style={{
+                    height: 70,
+                    width: '95%',
+                    margin: 5,
+                    backgroundColor: '#009387',
+                  }}
+                  mode={'outlined'}
                   label="SMS VERIFICATION"
                   value={verifySms}
                   onChangeText={text => setVerifySms(text)}
@@ -234,16 +257,43 @@ const AddProduct = props => {
                 <Button mode="contained" onPress={() => VerifyIsValidSms()}>
                   Verify
                 </Button>
+                <Button
+                  style={{
+                    backgroundColor: '#fc3003',
+                    marginTop: 10,
+                  }}
+                  mode="contained"
+                  onPress={() => {
+                    setSuccess(null);
+                    setIsSendingSms(null);
+                  }}>
+                  Cancel Transaction
+                </Button>
               </View>
             ) : (
               <View style={{width: '100%'}}>
+                <Title
+                  style={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignContent: 'center',
+                    alignItems: 'center',
+                    textAlign: 'center',
+                  }}>
+                  Password Verification
+                </Title>
                 <Caption>
                   <MaterialIcon name="onepassword" />
                   Account Password
                 </Caption>
                 <TextInput
-                  style={{height: 70, width: '95%', margin: 5}}
-                  mode={'flat'}
+                  style={{
+                    height: 70,
+                    width: '95%',
+                    margin: 5,
+                    backgroundColor: '#009387',
+                  }}
+                  mode={'outlined'}
                   secureTextEntry={true}
                   label="Enter Your Password"
                   value={password}
@@ -252,6 +302,18 @@ const AddProduct = props => {
 
                 <Button mode="contained" onPress={() => verifyPassword()}>
                   Verify Password
+                </Button>
+                <Button
+                  style={{
+                    backgroundColor: '#fc3003',
+                    marginTop: 10,
+                  }}
+                  mode="contained"
+                  onPress={() => {
+                    setSuccess(null);
+                    setIsSendingSms(null);
+                  }}>
+                  Cancel Transaction
                 </Button>
               </View>
             )}
@@ -308,10 +370,10 @@ export default AddProduct;
 const welcomeStyleScreen = StyleSheet.create({
   welcomeContainer: {
     width: '100%',
-    position: 'relative',
     display: 'flex',
     flexDirection: 'column',
-    backgroundColor: '#f8f8f8',
+    backgroundColor: '#fff',
+    padding: 10,
   },
   containerInformation: {
     width: 370,
@@ -325,7 +387,7 @@ const welcomeStyleScreen = StyleSheet.create({
     justifyContent: 'flex-start',
     alignItems: 'center',
     alignContent: 'center',
-    marginTop: 5,
+    marginTop: 10,
   },
   containerInformationCustomer: {
     width: 270,
@@ -341,19 +403,20 @@ const welcomeStyleScreen = StyleSheet.create({
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: '#009387',
+    display: 'flex',
+    flexDirection: 'column',
   },
   header: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    margin: 0,
+    padding: 0,
     width: '100%',
+    backgroundColor: '#fff',
   },
   footer: {
     display: 'flex',
     flexDirection: 'column',
-    backgroundColor: '#fff',
+    backgroundColor: '#009387',
+    height: '100%',
     borderTopLeftRadius: 30,
     borderTopRightRadius: 30,
     paddingVertical: 50,
