@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   Alert,
   PermissionsAndroid,
+  Image,
 } from 'react-native';
 import QRCodeScanner from 'react-native-qrcode-scanner';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -172,7 +173,7 @@ const AddProduct = props => {
     <View style={{height: '100%', margin: 0, padding: 0}}>
       {isSuccess ? (
         <View style={styles.container}>
-          <Card style={{margin: 5}}>
+          <Card style={{margin: 5, backgroundColor: '#e8c15f'}}>
             <Card.Content>
               <View style={styles.header}>
                 <View style={welcomeStyleScreen.welcomeContainer}>
@@ -246,7 +247,7 @@ const AddProduct = props => {
                     height: 70,
                     width: '95%',
                     margin: 5,
-                    backgroundColor: '#009387',
+                    backgroundColor: '#cfe0f0',
                   }}
                   mode={'outlined'}
                   label="SMS VERIFICATION"
@@ -269,6 +270,15 @@ const AddProduct = props => {
                   }}>
                   Cancel Transaction
                 </Button>
+                <View
+                  style={{
+                    width: '100%',
+                  }}>
+                  <Image
+                    style={{width: '100%', margin: 5}}
+                    source={require('./../assets/printinfo.png')}
+                  />
+                </View>
               </View>
             ) : (
               <View style={{width: '100%'}}>
@@ -291,7 +301,7 @@ const AddProduct = props => {
                     height: 70,
                     width: '95%',
                     margin: 5,
-                    backgroundColor: '#009387',
+                    backgroundColor: '#cfe0f0',
                   }}
                   mode={'outlined'}
                   secureTextEntry={true}
@@ -315,6 +325,15 @@ const AddProduct = props => {
                   }}>
                   Cancel Transaction
                 </Button>
+                <View
+                  style={{
+                    width: '100%',
+                  }}>
+                  <Image
+                    style={{width: '100%', margin: 5}}
+                    source={require('./../assets/printinfo.png')}
+                  />
+                </View>
               </View>
             )}
           </View>
@@ -330,36 +349,82 @@ const AddProduct = props => {
           <Text style={{marginTop: 3}}>Wait For Result</Text>
         </View>
       ) : (
-        <QRCodeScanner
-          containerStyle={{
-            position: 'absolute',
-            top: 0,
-            backgroundColor: '#ffffff',
-            height: '100%',
-            marginTop: 0,
+        <View
+          style={{
+            margin: 0,
             padding: 0,
-          }}
-          onRead={ifScanneed}
-          permissionDialogMessage="Need Permission To Access Camera"
-          reactivate={true}
-          showMarker={true}
-          reactivateTimeout={1500}
-          fadeIn={true}
-          cameraType={cameraView ? 'front' : 'back'}
-          markerStyle={{borderColor: '#fff', borderRadius: 10}}
-          bottomContent={
-            <TouchableOpacity onPress={() => setCameraView(!cameraView)}>
-              <Text
-                style={{
-                  fontSize: 21,
-                  color: 'white',
-                  marginBottom: 95,
-                }}>
-                <Ionicons name="camera-reverse-outline" size={30} />
-              </Text>
-            </TouchableOpacity>
-          }
-        />
+            width: '100%',
+            height: '100%',
+            display: 'flex',
+            flexDirection: 'column',
+          }}>
+          <View
+            style={{
+              margin: 0,
+              padding: 0,
+              width: '100%',
+              height: '73%',
+            }}>
+            <QRCodeScanner
+              containerStyle={{
+                position: 'absolute',
+                top: 0,
+                backgroundColor: '#ffffff',
+                height: '100%',
+                marginTop: 0,
+                padding: 0,
+              }}
+              cameraStyle={{
+                width: '100%',
+              }}
+              onRead={ifScanneed}
+              permissionDialogMessage="Need Permission To Access Camera"
+              reactivate={true}
+              showMarker={true}
+              reactivateTimeout={1500}
+              fadeIn={true}
+              cameraType={cameraView ? 'front' : 'back'}
+              markerStyle={{borderColor: '#fff', borderRadius: 10}}
+              bottomContent={
+                <TouchableOpacity onPress={() => setCameraView(!cameraView)}>
+                  <Text
+                    style={{
+                      fontSize: 21,
+                      color: 'white',
+                      marginBottom: -10,
+                    }}>
+                    <Ionicons name="camera-reverse-outline" size={30} />
+                  </Text>
+                </TouchableOpacity>
+              }
+            />
+          </View>
+          <Title
+            style={{
+              marginTop: 20,
+              display: 'flex',
+              justifyContent: 'center',
+              alignContent: 'center',
+              alignItems: 'center',
+              textAlign: 'center',
+              color: '#e5b849',
+            }}>
+            Customer QRCODE
+          </Title>
+          <View
+            style={{
+              width: '100%',
+              display: 'flex',
+              justifyContent: 'center',
+              alignContent: 'center',
+              alignItems: 'center',
+            }}>
+            <Image
+              style={{width: '100%', margin: 5}}
+              source={require('./../assets/printinfo.png')}
+            />
+          </View>
+        </View>
       )}
     </View>
   );
@@ -372,7 +437,6 @@ const welcomeStyleScreen = StyleSheet.create({
     width: '100%',
     display: 'flex',
     flexDirection: 'column',
-    backgroundColor: '#fff',
     padding: 10,
   },
   containerInformation: {
@@ -410,13 +474,13 @@ const styles = StyleSheet.create({
     margin: 0,
     padding: 0,
     width: '100%',
-    backgroundColor: '#fff',
   },
   footer: {
+    height: '100%',
+    width: '100%',
     display: 'flex',
     flexDirection: 'column',
-    backgroundColor: '#009387',
-    height: '100%',
+    backgroundColor: '#cfe0f0',
     borderTopLeftRadius: 30,
     borderTopRightRadius: 30,
     paddingVertical: 50,
